@@ -3,21 +3,17 @@ import SwiftUI
 struct ContentView: View {
 	var body: some View {
 		ZStack {
-			GameButton(startAngle: 180).foregroundColor(.red)
-			GameButton(startAngle: 270).foregroundColor(.blue)
-			GameButton(startAngle: 90).foregroundColor(.green)
-			GameButton(startAngle: 0).foregroundColor(.yellow)
+			GameButton(startFraction: 0.5, color: .red)
+			GameButton(startFraction: 0.75, color: .blue)
+			GameButton(startFraction: 0.25, color: .green)
+			GameButton(startFraction: 0, color: .yellow)
 		}
 	}
-}
 
-struct GameButton: Shape {
-	let startAngle: CGFloat
-
-	func path(in rect: CGRect) -> Path {
-		var p = Path()
-		p.addArc(center: .init(x: 100, y: 100), radius: 50, startAngle: .degrees(startAngle), endAngle: .degrees(startAngle + 90), clockwise: false)
-		return p.strokedPath(.init(lineWidth: 20))
+	private func GameButton(startFraction: CGFloat, color: Color) -> some View {
+		Circle()
+			.trim(from: startFraction, to: startFraction + 0.25)
+			.stroke(color, style: .init(lineWidth: 100))
 	}
 }
 
